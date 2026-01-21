@@ -259,11 +259,11 @@ int main(int argc, char *argv[])
 			break;
 		
 		case 'c':
-			color_parse(optarg, &color)
+			color_parse(optarg, &color);
 			break;
 		
 		case 'b':
-			color_parse(optarg, &bgColor)
+			color_parse(optarg, &bgColor);
 			break;
 
 		case '8':
@@ -321,7 +321,7 @@ int main(int argc, char *argv[])
 	}
 
 	qrean_set_bitmap_scale(&qrean, scale);
-	qrean_set_bitmap_color(&qrean, color, bgColor)
+	qrean_set_bitmap_color(&qrean, color, bgColor);
 	if (padding) qrean_set_bitmap_padding(&qrean, *padding);
 	if (QREAN_IS_TYPE_QRFAMILY(&qrean)) {
 		qrean_set_qr_version(&qrean, version);
