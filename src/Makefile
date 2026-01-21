@@ -4,6 +4,7 @@ DESTDIR ?= /usr
 SRCS += bitstream.c
 SRCS += utils.c
 SRCS += debug.c
+SRCS += color.c
 
 SRCS += galois.c
 SRCS += reedsolomon.c
