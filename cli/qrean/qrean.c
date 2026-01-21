@@ -11,6 +11,7 @@
 #include "image.h"
 #include "qrean.h"
 #include "qrspec.h"
+#include "color.h"
 
 #include "miniz.h"
 
@@ -155,8 +156,10 @@ int main(int argc, char *argv[])
 	padding_t default_padding = create_padding1(4), *padding = NULL;
 	qrean_data_type_t data_type = QREAN_DATA_TYPE_AUTO;
 	int eci_code = QR_ECI_CODE_LATIN1;
+	uint32_t color = 0x000000ff;
+	uint32_t bgColor = 0xffffffff;
 
-	while ((ch = getopt(argc, argv, "hVi:o:s:f:t:v:l:m:p:8KANUSE:")) != -1) {
+	while ((ch = getopt(argc, argv, "hVi:o:s:f:t:v:c:b:l:m:p:8KANUSE:")) != -1) {
 		int n;
 		switch (ch) {
 		case 'h':
@@ -254,6 +257,14 @@ int main(int argc, char *argv[])
 		case 'p':
 			padding = parse_padding(optarg, &default_padding);
 			break;
+		
+		case 'c':
+			color_parse(optarg, &color)
+			break;
+		
+		case 'b':
+			color_parse(optarg, &bgColor)
+			break;
 
 		case '8':
 			data_type = QREAN_DATA_TYPE_8BIT;
@@ -310,6 +321,7 @@ int main(int argc, char *argv[])
 	}
 
 	qrean_set_bitmap_scale(&qrean, scale);
+	qrean_set_bitmap_color(&qrean, color, bgColor)
 	if (padding) qrean_set_bitmap_padding(&qrean, *padding);
 	if (QREAN_IS_TYPE_QRFAMILY(&qrean)) {
 		qrean_set_qr_version(&qrean, version);

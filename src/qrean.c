@@ -36,7 +36,7 @@ bit_t qrean_init(qrean_t *qrean, qrean_code_type_t type)
 			qrean_set_bitmap_padding(qrean, qrean->code->padding);
 
 			qrean_set_bitmap_scale(qrean, 4);
-			qrean_set_bitmap_color(qrean, 0x00000000, 0xffffffff);
+			qrean_set_bitmap_color(qrean, 0x000000ff, 0xffffffff);
 
 #ifndef NO_CANVAS_BUFFER
 #if defined(USE_MALLOC_BUFFER) && !defined(NO_MALLOC)

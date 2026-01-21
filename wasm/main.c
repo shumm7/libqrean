@@ -7,6 +7,7 @@
 #include "detector.h"
 #include "debug.h"
 #include "printf.h"
+#include "color.h"
 
 __attribute__((import_module("env"), import_name("debug")))
 extern void debug(const char *str);
@@ -33,6 +34,8 @@ typedef struct {
 	int eci_code;
 	int padding[4];
 	int scale;
+	char* color;
+	char* bgColor;
 } encode_options_t;
 
 image_t* encode(const char *inputbuf, encode_options_t *opts) {
@@ -62,12 +65,16 @@ image_t* encode(const char *inputbuf, encode_options_t *opts) {
 	size_t height = qrean_get_bitmap_height(&qrean);
 
 	image_t *img = malloc(width * height * sizeof(image_pixel_t));
+	uint32_t color = 0x000000ff;
+	uint32_t bgColor = 0xffffffff;
+	color_parse(opts->color, &color);
+	color_parse(opts->color, &bgColor);
 	if (img) {
 		img->width = width;
 		img->height = height;
 		img->buffer = (image_pixel_t*)(((char*)img) + sizeof(image_t));
 
-		qrean_set_bitmap_color(&qrean, 0x000000FF, 0xFFFFFFFF);
+		qrean_set_bitmap_color(&qrean, color, bgColor);
 		qrean_read_bitmap(&qrean, img->buffer, width * height * 4, 32);
 	}
 	return img;
